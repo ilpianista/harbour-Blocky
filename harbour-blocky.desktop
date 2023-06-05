@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=Application
+# From https://harbour.jolla.com/faq
+# > this will make sure that the application is launched using the right booster, and will make startup faster
+# However this makes impossible to restart the blocky service when launched from lipstick.
+#X-Nemo-Application-Type=silica-qt5
+Categories=Network;
+Icon=harbour-blocky
+Exec=harbour-blocky
+Name=Blocky
+Comment=A DNS proxy and ad-blocker for the local network
+
+[X-Sailjail]
+Sandboxing=Disabled

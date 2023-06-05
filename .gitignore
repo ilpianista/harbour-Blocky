@@ -1,0 +1,7 @@
+*~
+*.pro.user
+*.pro.user.*
+*.autosave
+RPMS
+
+rpm/*.tar.gz
