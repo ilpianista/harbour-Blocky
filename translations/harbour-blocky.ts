@@ -11,5 +11,9 @@
         <source>Save and restart</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ERROR! blocky start failed with: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

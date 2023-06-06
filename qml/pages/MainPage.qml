@@ -52,12 +52,26 @@ Page {
                 text: manager.readConfig()
             }
 
+            BusyIndicator {
+                id: busy
+                visible: false
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+
+            Label {
+                id: errorMsg
+                visible: false
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+
             Button {
                 id: start
                 text: qsTr("Save and restart")
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 onClicked: {
+                    enabled = config.enabled = errorMsg.visible = false;
+                    busy.visible = busy.running = true;
                     manager.saveConfig(config.text);
                     systemd.typedCall('RestartUnit',
                         [
@@ -69,8 +83,12 @@ Page {
                         },
                         function(error, message) {
                             console.log("failed (" + error + ") with:", message);
+                            errorMsg.text = qsTr("ERROR! blocky start failed with: %1").arg(message);
+                            errorMsg.visible = true;
                         }
                     );
+                    enabled = config.enabled = true;
+                    busy.visible = busy.running = false;
                 }
             }
         }
