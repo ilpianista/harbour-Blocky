@@ -31,7 +31,7 @@ jobs:
             cd build ;
             cp -r /workspace/* . ;
             cd rpm ;
-            curl -O https://github.com/0xERR0R/blocky/releases/download/v${BLOCKY_VERSION}/blocky_v${BLOCKY_VERSION}_Linux_armv7.tar.gz ;
+            curl -OL https://github.com/0xERR0R/blocky/releases/download/v${BLOCKY_VERSION}/blocky_v${BLOCKY_VERSION}_Linux_armv7.tar.gz ;
             cd .. ;
             mb2 -t SailfishOS-$RELEASE-armv7hl build --prepare ;
             sudo mkdir -p /workspace/RPMS ;
@@ -44,7 +44,7 @@ jobs:
             cd build ;
             cp -r /workspace/* . ;
             cd rpm ;
-            curl -O https://github.com/0xERR0R/blocky/releases/download/v${BLOCKY_VERSION}/blocky_v${BLOCKY_VERSION}_Linux_arm64.tar.gz ;
+            curl -OL https://github.com/0xERR0R/blocky/releases/download/v${BLOCKY_VERSION}/blocky_v${BLOCKY_VERSION}_Linux_arm64.tar.gz ;
             cd .. ;
             mb2 -t SailfishOS-$RELEASE-aarch64 build --prepare ;
             sudo mkdir -p /workspace/RPMS ;
