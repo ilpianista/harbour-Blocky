@@ -35,8 +35,11 @@ public:
     explicit BlockyManager(QObject *parent = 0);
     virtual ~BlockyManager();
 
-    Q_INVOKABLE QString readConfig() const;
+    Q_INVOKABLE QString readConfig();
     Q_INVOKABLE void saveConfig(const QString content);
+
+Q_SIGNALS:
+    void migratedConfig();
 
 };
 

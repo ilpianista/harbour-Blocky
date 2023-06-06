@@ -70,6 +70,7 @@ install -m644 %{SOURCE2} %{buildroot}%{_unitdir}
 
 install -m755 %{_sourcedir}/blocky %{buildroot}%{_bindir}
 
+install -Dm644 %{SOURCE3} %{buildroot}%{_sysconfdir}/blocky.yaml
 install -Dm644 %{SOURCE3} %{buildroot}%{_datadir}/%{name}/blocky.yaml
 
 install -d %{buildroot}%{_sysconfdir}/systemd/system/connman.service.d
@@ -89,6 +90,7 @@ desktop-file-install --delete-original       \
 %attr(4755,root,root) %{_bindir}/%{name}
 %{_bindir}/blocky
 %{_datadir}/%{name}
+%config(noreplace) %{_sysconfdir}/blocky.yaml
 %{_datadir}/%{name}/blocky.yaml
 %{_sysconfdir}/systemd/system/connman.service.d/override.conf
 %{_sysconfdir}/tmpfiles.d/connman_resolvconf.conf

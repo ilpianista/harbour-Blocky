@@ -18,12 +18,50 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import Nemo.DBus 2.0
 import "pages"
 
 ApplicationWindow
 {
+    id: appWindow
+
+    Connections {
+        target: manager
+
+        // here because it's emitted too fast
+        onMigratedConfig: {
+            restartBlocky();
+        }
+    }
+
+    DBusInterface {
+        id: systemd
+
+        bus: DBus.SystemBus
+        service: 'org.freedesktop.systemd1'
+        path: '/org/freedesktop/systemd1'
+        iface: 'org.freedesktop.systemd1.Manager'
+    }
+
     initialPage: Component { MainPage { } }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
+
+    function restartBlocky() {
+        systemd.typedCall('RestartUnit',
+            [
+                { 'type': 's', 'value': 'blocky.service' },
+                { 'type': 's', 'value': 'fail' }
+            ],
+            function(result) {
+                console.log("Success! Blocky started.");
+            },
+            function(error, message) {
+                console.log("Restart failed (" + error + ") with:", message);
+                errorMsg.text = qsTr("ERROR! blocky start failed with: %1").arg(message);
+                errorMsg.visible = true;
+            }
+        );
+    }
 }
 
 

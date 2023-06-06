@@ -40,21 +40,22 @@ BlockyManager::~BlockyManager()
 {
 }
 
-QString BlockyManager::readConfig() const
+QString BlockyManager::readConfig()
 {
+    QFile f("/etc/blocky.yaml");
+
     const QDir configDir(QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation));
+    QFile old(configDir.absolutePath() + "/blocky.yaml");
+    if (old.exists()) {
+        qDebug() << "old config file exist, migrate to /etc";
 
-    if (!configDir.exists()) {
-        if (!configDir.mkpath(configDir.absolutePath())) {
-            qCritical() << "Cannot create config dir!";
+        if (f.exists()) {
+            f.remove();
         }
-    }
+        QFile::copy(old.fileName(), f.fileName());
+        Q_EMIT migratedConfig();
 
-    QFile f(configDir.absolutePath() + "/blocky.yaml");
-    if (!f.exists()) {
-        qDebug() << "config file doesn't exist initialize default";
-        QFile::copy("/usr/share/" + QCoreApplication::applicationName() + "/blocky.yaml",
-                    configDir.absolutePath() + "/blocky.yaml");
+        old.remove();
     }
 
     f.open(QIODevice::ReadOnly);
@@ -69,7 +70,7 @@ QString BlockyManager::readConfig() const
 
 void BlockyManager::saveConfig(const QString content)
 {
-    QFile f(QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation) + "/blocky.yaml");
+    QFile f("/etc/blocky.yaml");
     f.open(QIODevice::WriteOnly);
     f.write(content.toUtf8());
     f.close();

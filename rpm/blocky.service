@@ -4,7 +4,7 @@ Requires=connman.service
 After=connman.service
 
 [Service]
-ExecStart=/usr/bin/blocky --config /home/nemo/.config/dev.scarpino/harbour-blocky/blocky.yaml
+ExecStart=/usr/bin/blocky --config /etc/blocky.yaml
 Restart=on-failure
 
 [Install]

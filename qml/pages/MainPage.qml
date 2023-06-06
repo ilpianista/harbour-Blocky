@@ -18,20 +18,10 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import Nemo.DBus 2.0
 
 Page {
 
     allowedOrientations: Orientation.All
-
-    DBusInterface {
-        id: systemd
-
-        bus: DBus.SystemBus
-        service: 'org.freedesktop.systemd1'
-        path: '/org/freedesktop/systemd1'
-        iface: 'org.freedesktop.systemd1.Manager'
-    }
 
     SilicaFlickable {
         anchors.fill: parent
@@ -73,20 +63,7 @@ Page {
                     enabled = config.enabled = errorMsg.visible = false;
                     busy.visible = busy.running = true;
                     manager.saveConfig(config.text);
-                    systemd.typedCall('RestartUnit',
-                        [
-                            { 'type': 's', 'value': 'blocky.service' },
-                            { 'type': 's', 'value': 'fail' }
-                        ],
-                        function(result) {
-                            console.log("Success! Blocky started.");
-                        },
-                        function(error, message) {
-                            console.log("failed (" + error + ") with:", message);
-                            errorMsg.text = qsTr("ERROR! blocky start failed with: %1").arg(message);
-                            errorMsg.visible = true;
-                        }
-                    );
+                    appWindow.restartBlocky();
                     enabled = config.enabled = true;
                     busy.visible = busy.running = false;
                 }
