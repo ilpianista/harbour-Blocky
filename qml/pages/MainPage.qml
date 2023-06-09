@@ -33,7 +33,7 @@ Page {
             spacing: Theme.paddingLarge
 
             PageHeader {
-                title: qsTr("Blocky")
+                title: "Blocky"
             }
 
             TextArea {
