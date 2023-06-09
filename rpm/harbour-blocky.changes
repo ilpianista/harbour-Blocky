@@ -1,3 +1,6 @@
+* Fir Jun 09 2023 Andrea Scarpino <andrea@scarpino.dev> 0.0.3-1
+- Move configuration file to /etc to solve compatibility with defaultuser and first start.
+
 * Tue Jun 06 2023 Andrea Scarpino <andrea@scarpino.dev> 0.0.2-1
 - Fix aarch64 build.
 
