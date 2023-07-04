@@ -102,20 +102,22 @@ desktop-file-install --delete-original       \
 
 %post
 systemctl daemon-reload
-if [ $1 -eq 0 ]; then
-  systemctl enable blocky.service
-  systemctl restart connman.service
-  rm /etc/resolv.conf
-  echo "nameserver 127.0.0.1" > /etc/resolv.conf
-fi
+systemctl enable blocky.service
+systemctl restart connman.service
+rm /etc/resolv.conf
+echo "nameserver 127.0.0.1" > /etc/resolv.conf
 systemctl restart blocky.service
 
 %preun
 if [ $1 -eq 0 ]; then
   systemctl stop blocky.service
   systemctl disable blocky.service
+fi
+
+%postun
+if [ $1 -eq 0 ]; then
   systemctl daemon-reload
-  systemctl restart connman.service
   rm /etc/resolv.conf
+  systemctl restart connman.service
   systemd-tmpfiles --create
 fi
