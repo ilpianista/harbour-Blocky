@@ -12,4 +12,5 @@ blocking:
     default:
       - ads
   startStrategy: fast
-port: 53
+ports:
+  dns: 127.0.0.1:53
