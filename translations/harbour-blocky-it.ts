@@ -11,10 +11,6 @@
 <context>
     <name>MainPage</name>
     <message>
-        <source>Blocky</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Save and restart</source>
         <translation type="unfinished"></translation>
     </message>
