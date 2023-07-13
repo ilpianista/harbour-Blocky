@@ -102,10 +102,13 @@ desktop-file-install --delete-original       \
 
 %post
 systemctl daemon-reload
+if [ $1 -eq 1 ]; then
 systemctl enable blocky.service
 systemctl restart connman.service
 rm /etc/resolv.conf
 echo "nameserver 127.0.0.1" > /etc/resolv.conf
+systemctl-user restart booster-browser@sailfish-browser booster-browser@jolla-email
+fi
 systemctl restart blocky.service
 
 %preun
