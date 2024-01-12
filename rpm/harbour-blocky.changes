@@ -1,3 +1,9 @@
+* Fri Jan 12 2024 Andrea Scarpino <andrea@scarpino.dev> 0.0.6-1
+- Update Blocky to 0.23
+
+* Thu Jul 13 2023 Andrea Scarpino <andrea@scarpino.dev> 0.0.5-1
+- On the first installation, restart browser and email so they use blocky as well.
+
 * Thu Jul 13 2023 Andrea Scarpino <andrea@scarpino.dev> 0.0.5-1
 - On the first installation, restart browser and email so they use blocky as well.
 
