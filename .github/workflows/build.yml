@@ -11,8 +11,8 @@ on:
       - master
 
 env:
-  RELEASE: 4.5.0.16
-  BLOCKY_VERSION: 0.24
+  RELEASE: 4.6.0.13
+  BLOCKY_VERSION: 0.28.2
 
 jobs:
   build:
