@@ -1,16 +1,23 @@
-upstream:
-  default:
-    - 46.182.19.48
-    - 80.241.218.68
-    - tcp-tls:fdns1.dismail.de:853
-    - https://dns.digitale-gesellschaft.ch/dns-query
+upstreams:
+  groups:
+    default:
+      - 86.54.11.13
+      - 2a13:1001::86:54:11:13
+      - tcp-tls:noads.joindns4.eu
+      - https://noads.joindns4.eu/dns-query
 blocking:
-  blackLists:
+  denylists:
     ads:
+      - https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt
       - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+      - http://sysctl.org/cameleon/hosts
+      - https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt
+    special:
+      - https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews/hosts
   clientGroupsBlock:
     default:
       - ads
+      - special
   startStrategy: fast
 ports:
   dns: 127.0.0.1:53

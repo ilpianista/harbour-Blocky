@@ -1,3 +1,8 @@
+* Thu Jan 15 2026 Andrea Scarpino <andrea@scarpino.dev> 0.0.8-1
+- Update Blocky to 0.29.0
+- Breaking config change, this one replace existing config!
+- Default config use DNS4EU
+
 * Thu Jan 15 2026 Andrea Scarpino <andrea@scarpino.dev> 0.0.7-1
 - Update Blocky to 0.28.2
 

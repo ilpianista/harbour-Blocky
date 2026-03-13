@@ -2,7 +2,7 @@ Name:       harbour-blocky
 
 # >> macros
 %global _missing_build_ids_terminate_build 0
-%define blocky_version 0.28.2
+%define blocky_version 0.29.0
 # << macros
 
 %{!?qtc_qmake:%define qtc_qmake %qmake}
@@ -10,7 +10,7 @@ Name:       harbour-blocky
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    blocky
-Version:    0.0.7
+Version:    0.0.8
 Release:    1
 Group:      Qt/Qt
 License:    GPLv3
@@ -90,7 +90,7 @@ desktop-file-install --delete-original       \
 %attr(4755,root,root) %{_bindir}/%{name}
 %{_bindir}/blocky
 %{_datadir}/%{name}
-%config(noreplace) %{_sysconfdir}/blocky.yaml
+%{_sysconfdir}/blocky.yaml
 %{_datadir}/%{name}/blocky.yaml
 %{_sysconfdir}/systemd/system/connman.service.d/override.conf
 %{_sysconfdir}/tmpfiles.d/connman_resolvconf.conf
