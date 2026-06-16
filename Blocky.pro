@@ -29,4 +29,5 @@ HEADERS += \
 CONFIG += sailfishapp_i18n
 
 TRANSLATIONS += \
-    translations/harbour-blocky-it.ts
+    translations/harbour-blocky-it.ts \
+    translations/harbour-blocky-sv.ts
