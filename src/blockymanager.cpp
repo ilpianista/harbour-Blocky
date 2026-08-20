@@ -244,7 +244,8 @@ QString BlockyManager::generateConfig(const QStringList &upstreamServers,
     config += QLatin1String("  clientGroupsBlock:\n");
     config += QLatin1String("    default:\n");
     config += QLatin1String("      - ads\n");
-    config += QLatin1String("  startStrategy: fast\n");
+    config += QLatin1String("  loading:\n");
+    config += QLatin1String("    strategy: fast\n");
 
     config += QLatin1String("ports:\n");
     config += QLatin1String("  dns: 127.0.0.1:53\n");

@@ -14,6 +14,7 @@ blocking:
   clientGroupsBlock:
     default:
       - ads
-  startStrategy: fast
+  loading:
+    strategy: fast
 ports:
   dns: 127.0.0.1:53
