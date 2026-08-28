@@ -31,6 +31,7 @@
 #include <QSettings>
 #include <QStandardPaths>
 #include <QTextStream>
+#include <QVariantMap>
 
 static const QString CONFIG_PATH = QStringLiteral("/etc/blocky.yaml");
 
@@ -87,7 +88,7 @@ QStringList BlockyManager::upstreams()
 void BlockyManager::setUpstreams(const QStringList &servers)
 {
     QStringList d = denylist();
-    saveConfig(generateConfig(servers, d));
+    saveConfig(generateConfig(servers, d, mappings()));
 }
 
 QStringList BlockyManager::denylist()
@@ -98,7 +99,87 @@ QStringList BlockyManager::denylist()
 void BlockyManager::setDenylist(const QStringList &urls)
 {
     QStringList u = upstreams();
-    saveConfig(generateConfig(u, urls));
+    saveConfig(generateConfig(u, urls, mappings()));
+}
+
+QVariantList BlockyManager::mappings()
+{
+    QVariantList result;
+    QFile f(CONFIG_PATH);
+
+    if (!f.open(QIODevice::ReadOnly)) {
+        return result;
+    }
+
+    QStringList lines;
+    QTextStream in(&f);
+    while (!in.atEnd()) {
+        lines.append(in.readLine());
+    }
+    f.close();
+
+    const QStringList path = {QStringLiteral("customDNS"), QStringLiteral("mapping")};
+    int depth = 0;
+    bool inTarget = false;
+    int targetIndent = -1;
+    int prevIndent = -1;
+
+    for (int i = 0; i < lines.size(); ++i) {
+        const QString &line = lines.at(i);
+        if (line.trimmed().isEmpty() || line.trimmed().startsWith(QLatin1Char('#'))) {
+            continue;
+        }
+
+        int indent = 0;
+        for (int j = 0; j < line.size(); ++j) {
+            if (line.at(j) == QLatin1Char(' ')) {
+                ++indent;
+            } else {
+                break;
+            }
+        }
+
+        QString trimmed = line.trimmed();
+
+        if (inTarget) {
+            if (indent > targetIndent && !trimmed.startsWith(QLatin1String("- "))) {
+                int colon = trimmed.indexOf(QLatin1Char(':'));
+                if (colon > 0) {
+                    QVariantMap entry;
+                    entry.insert(QStringLiteral("domain"), trimmed.left(colon).trimmed());
+                    entry.insert(QStringLiteral("ip"), trimmed.mid(colon + 1).trimmed());
+                    result.append(entry);
+                }
+            } else {
+                break;
+            }
+            continue;
+        }
+
+        if (depth < path.size() && indent > prevIndent) {
+            QString key = trimmed;
+            if (key.endsWith(QLatin1Char(':'))) {
+                key.chop(1);
+            }
+            if (key == path.at(depth)) {
+                ++depth;
+                prevIndent = indent;
+                if (depth == path.size()) {
+                    inTarget = true;
+                    targetIndent = indent;
+                }
+            }
+        }
+    }
+
+    return result;
+}
+
+void BlockyManager::setMappings(const QVariantList &mappings)
+{
+    QStringList u = upstreams();
+    QStringList d = denylist();
+    saveConfig(generateConfig(u, d, mappings));
 }
 
 QString BlockyManager::fullConfig()
@@ -107,9 +188,10 @@ QString BlockyManager::fullConfig()
 }
 
 void BlockyManager::saveFromEntries(const QStringList &upstreamServers,
-                                    const QStringList &denylistUrls)
+                                    const QStringList &denylistUrls,
+                                    const QVariantList &mappings)
 {
-    saveConfig(generateConfig(upstreamServers, denylistUrls));
+    saveConfig(generateConfig(upstreamServers, denylistUrls, mappings));
 }
 
 bool BlockyManager::apiEnabled()
@@ -224,7 +306,8 @@ QStringList BlockyManager::parseList(const QString &section, const QString &list
 }
 
 QString BlockyManager::generateConfig(const QStringList &upstreamServers,
-                                      const QStringList &denylistUrls) const
+                                      const QStringList &denylistUrls,
+                                      const QVariantList &mappings) const
 {
     QString config;
 
@@ -253,6 +336,19 @@ QString BlockyManager::generateConfig(const QStringList &upstreamServers,
     QSettings settings(m_settingsPath, QSettings::IniFormat);
     if (settings.value(QStringLiteral("apiEnabled"), true).toBool()) {
         config += QLatin1String("  http: 127.0.0.1:4000\n");
+    }
+
+    if (!mappings.isEmpty()) {
+        config += QLatin1String("customDNS:\n");
+        config += QLatin1String("  mapping:\n");
+        for (const QVariant &v : mappings) {
+            const QVariantMap entry = v.toMap();
+            const QString domain = entry.value(QStringLiteral("domain")).toString().trimmed();
+            const QString ip = entry.value(QStringLiteral("ip")).toString().trimmed();
+            if (!domain.isEmpty()) {
+                config += QStringLiteral("    %1: %2\n").arg(domain, ip);
+            }
+        }
     }
 
     return config;

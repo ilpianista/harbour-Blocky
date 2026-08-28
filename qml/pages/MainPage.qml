@@ -30,6 +30,10 @@ Page {
         id: denylistModel
     }
 
+    ListModel {
+        id: mappingModel
+    }
+
     Component.onCompleted: loadPage()
     onStatusChanged: if (status === PageStatus.Active)
         loadPage()
@@ -37,6 +41,7 @@ Page {
     function loadPage() {
         loadUpstreams();
         loadDenylist();
+        loadMappings();
         config.text = manager.readConfig();
     }
 
@@ -60,12 +65,38 @@ Page {
         }
     }
 
+    function loadMappings() {
+        mappingModel.clear();
+        var list = manager.mappings();
+        for (var i = 0; i < list.length; i++) {
+            mappingModel.append({
+                "domain": list[i].domain,
+                "ip": list[i].ip
+            });
+        }
+    }
+
     function collectList(model) {
         var arr = [];
         for (var i = 0; i < model.count; i++) {
             var val = model.get(i).value.trim();
             if (val.length > 0) {
                 arr.push(val);
+            }
+        }
+        return arr;
+    }
+
+    function collectMappings(model) {
+        var arr = [];
+        for (var i = 0; i < model.count; i++) {
+            var domain = model.get(i).domain.trim();
+            var ip = model.get(i).ip.trim();
+            if (domain.length > 0 && ip.length > 0) {
+                arr.push({
+                    "domain": domain,
+                    "ip": ip
+                });
             }
         }
         return arr;
@@ -188,6 +219,70 @@ Page {
                 })
             }
 
+            SectionHeader {
+                text: qsTr("Custom DNS")
+            }
+
+            Label {
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    leftMargin: Theme.horizontalPageMargin
+                    rightMargin: Theme.horizontalPageMargin
+                }
+                color: Theme.secondaryColor
+                font.pixelSize: Theme.fontSizeExtraSmall
+                text: qsTr("Map domains to custom IP addresses. Separate multiple IP addresses for a single domain with commas.")
+                wrapMode: Text.Wrap
+            }
+
+            Repeater {
+                model: mappingModel
+
+                Column {
+                    width: parent.width
+
+                    Row {
+                        width: parent.width
+
+                        TextField {
+                            width: parent.width - removeMappingBtn.width - Theme.paddingMedium
+                            text: domain
+                            placeholderText: qsTr("Domain")
+                            inputMethodHints: Qt.ImhNoAutoUppercase
+                            onTextChanged: mappingModel.set(index, {
+                                "domain": text
+                            })
+                        }
+
+                        IconButton {
+                            id: removeMappingBtn
+                            icon.source: "image://theme/icon-m-clear"
+                            onClicked: mappingModel.remove(index)
+                        }
+                    }
+
+                    TextField {
+                        width: parent.width
+                        text: ip
+                        placeholderText: qsTr("IP address(es)")
+                        inputMethodHints: Qt.ImhNoAutoUppercase
+                        onTextChanged: mappingModel.set(index, {
+                            "ip": text
+                        })
+                    }
+                }
+            }
+
+            Button {
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: qsTr("Add mapping")
+                onClicked: mappingModel.append({
+                    "domain": "",
+                    "ip": ""
+                })
+            }
+
             Separator {
                 width: parent.width
                 color: Theme.highlightBackgroundColor
@@ -217,7 +312,7 @@ Page {
                     saveBtn.enabled = false;
                     busy.visible = busy.running = true;
 
-                    manager.saveFromEntries(collectList(upstreamsModel), collectList(denylistModel));
+                    manager.saveFromEntries(collectList(upstreamsModel), collectList(denylistModel), collectMappings(mappingModel));
 
                     appWindow.restartBlocky();
 

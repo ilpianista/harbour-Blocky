@@ -28,6 +28,7 @@
 #include <QObject>
 #include <QString>
 #include <QStringList>
+#include <QVariantList>
 
 class BlockyManager : public QObject
 {
@@ -48,10 +49,14 @@ public:
     Q_INVOKABLE QStringList denylist();
     Q_INVOKABLE void setDenylist(const QStringList &urls);
 
+    Q_INVOKABLE QVariantList mappings();
+    Q_INVOKABLE void setMappings(const QVariantList &mappings);
+
     Q_INVOKABLE QString fullConfig();
 
     Q_INVOKABLE void saveFromEntries(const QStringList &upstreamServers,
-                                     const QStringList &denylistUrls);
+                                     const QStringList &denylistUrls,
+                                     const QVariantList &mappings);
 
     Q_INVOKABLE bool apiEnabled();
     Q_INVOKABLE void setApiEnabled(bool enabled);
@@ -68,7 +73,8 @@ Q_SIGNALS:
 private:
     QStringList parseList(const QString &section, const QString &listName) const;
     QString generateConfig(const QStringList &upstreamServers,
-                           const QStringList &denylistUrls) const;
+                           const QStringList &denylistUrls,
+                           const QVariantList &mappings) const;
     QString m_settingsPath;
 };
 

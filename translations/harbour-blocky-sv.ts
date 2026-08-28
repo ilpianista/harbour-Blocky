@@ -72,6 +72,26 @@
         <source>Add to denylist</source>
         <translation>Lägg till i blocklistan</translation>
     </message>
+    <message>
+        <source>Custom DNS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Map domains to custom IP addresses. Separate multiple IP addresses for a single domain with commas.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Domain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IP address(es)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add mapping</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsPage</name>
