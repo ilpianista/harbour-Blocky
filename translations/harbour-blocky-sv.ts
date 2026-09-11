@@ -74,23 +74,23 @@
     </message>
     <message>
         <source>Custom DNS</source>
-        <translation type="unfinished"></translation>
+        <translation>Anpassad DNS</translation>
     </message>
     <message>
         <source>Map domains to custom IP addresses. Separate multiple IP addresses for a single domain with commas.</source>
-        <translation type="unfinished"></translation>
+        <translation>Koppla domäner till egna IP-adresser. Separera flera IP-adresser för en och samma domän med kommatecken.</translation>
     </message>
     <message>
         <source>Domain</source>
-        <translation type="unfinished"></translation>
+        <translation>Domän</translation>
     </message>
     <message>
         <source>IP address(es)</source>
-        <translation type="unfinished"></translation>
+        <translation>IP-adress(er)</translation>
     </message>
     <message>
         <source>Add mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Lägg till koppling</translation>
     </message>
 </context>
 <context>
