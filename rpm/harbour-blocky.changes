@@ -1,3 +1,10 @@
+* Wed Sep 16 2026 Andrea Scarpino <andrea@scarpino.dev> 0.0.11-1
+- Set log level to info by default and enable privacy mode.
+- Run the blocky process using the blocky user.
+- Support for Simple Mapping Custom DNS.
+- Update Blocky to 0.35.0.
+- Translation update.
+
 * Mon Jun 08 2026 Andrea Scarpino <andrea@scarpino.dev> 0.0.10-1
 - Document denylist format
 - Disable IPv6 in the default configuration.
