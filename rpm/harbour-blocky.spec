@@ -2,7 +2,7 @@ Name:       harbour-blocky
 
 # >> macros
 %global _missing_build_ids_terminate_build 0
-%define blocky_version 0.31.0
+%define blocky_version 0.35.0
 # << macros
 
 %{!?qtc_qmake:%define qtc_qmake %qmake}

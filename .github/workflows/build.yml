@@ -12,7 +12,7 @@ on:
 
 env:
   RELEASE: 4.6.0.13
-  BLOCKY_VERSION: 0.31.0
+  BLOCKY_VERSION: 0.35.0
 
 jobs:
   build:
