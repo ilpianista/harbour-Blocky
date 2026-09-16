@@ -2,7 +2,7 @@
 
 [Sailfish OS](https://sailfishos.org) UI for [blocky](https://0xerr0r.github.io/blocky/).
 
-This application uses **root** privileges to run as this is needed to start `blocky` with root privileges. This is a security risk!
+This application uses **root** privileges to run as this is needed to modify `blocky`'s configuration and restart it. This is a security risk!
 However, the `blocky` process uses its own user.
 
 ## Install
