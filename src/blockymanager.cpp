@@ -205,7 +205,27 @@ void BlockyManager::setApiEnabled(bool enabled)
     QSettings settings(m_settingsPath, QSettings::IniFormat);
     settings.setValue(QStringLiteral("apiEnabled"), enabled);
     settings.sync();
+
+    saveConfig(generateConfig(upstreams(), denylist(), mappings()));
+
     Q_EMIT apiEnabledChanged();
+}
+
+bool BlockyManager::infoLogging()
+{
+    QSettings settings(m_settingsPath, QSettings::IniFormat);
+    return settings.value(QStringLiteral("infoLogging"), false).toBool();
+}
+
+void BlockyManager::setInfoLogging(bool enabled)
+{
+    QSettings settings(m_settingsPath, QSettings::IniFormat);
+    settings.setValue(QStringLiteral("infoLogging"), enabled);
+    settings.sync();
+
+    saveConfig(generateConfig(upstreams(), denylist(), mappings()));
+
+    Q_EMIT infoLoggingChanged();
 }
 
 int BlockyManager::disableDuration()
@@ -311,6 +331,16 @@ QString BlockyManager::generateConfig(const QStringList &upstreamServers,
 {
     QString config;
 
+    QSettings settings(m_settingsPath, QSettings::IniFormat);
+
+    config += QLatin1String("log:\n");
+    if (settings.value(QStringLiteral("infoLogging"), false).toBool()) {
+        config += QLatin1String("  level: info\n");
+    } else {
+        config += QLatin1String("  level: warn\n");
+    }
+    config += QLatin1String("  privacy: true\n");
+
     config += QLatin1String("upstreams:\n");
     config += QLatin1String("  groups:\n");
     config += QLatin1String("    default:\n");
@@ -333,7 +363,6 @@ QString BlockyManager::generateConfig(const QStringList &upstreamServers,
     config += QLatin1String("ports:\n");
     config += QLatin1String("  dns: 127.0.0.1:53\n");
 
-    QSettings settings(m_settingsPath, QSettings::IniFormat);
     if (settings.value(QStringLiteral("apiEnabled"), true).toBool()) {
         config += QLatin1String("  http: 127.0.0.1:4000\n");
     }

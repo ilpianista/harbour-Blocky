@@ -124,10 +124,6 @@
         <translation>Aktivera</translation>
     </message>
     <message>
-        <source>Enables the REST API on port 4000. Required to disable blocking from the Cover. Also, the service must be restarted for this change to take effect.</source>
-        <translation>Aktiverar REST API:n på port 4000. Krävs för att inaktivera blockering från miniatyren. Dessutom måste tjänsten startas om för att denna ändring ska träda i kraft.</translation>
-    </message>
-    <message>
         <source>Blocking settings</source>
         <translation>Blockeringsinställningar</translation>
     </message>
@@ -138,6 +134,22 @@
     <message>
         <source>Restores the Blocky configuration to the default shipped with the app and restarts the service.</source>
         <translation>Återställer Blocky-konfigurationen till standardinställningarna som levereras med appen och startar om tjänsten.</translation>
+    </message>
+    <message>
+        <source>Logging</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info logging</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sets the blocky log level to info instead of the default warn. The service is restarted when changed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enables the REST API on port 4000. Required to disable blocking from the Cover. The service is restarted when changed.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

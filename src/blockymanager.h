@@ -34,6 +34,7 @@ class BlockyManager : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool apiEnabled READ apiEnabled WRITE setApiEnabled NOTIFY apiEnabledChanged)
+    Q_PROPERTY(bool infoLogging READ infoLogging WRITE setInfoLogging NOTIFY infoLoggingChanged)
 
 public:
     explicit BlockyManager(QObject *parent = 0);
@@ -61,6 +62,9 @@ public:
     Q_INVOKABLE bool apiEnabled();
     Q_INVOKABLE void setApiEnabled(bool enabled);
 
+    Q_INVOKABLE bool infoLogging();
+    Q_INVOKABLE void setInfoLogging(bool enabled);
+
     Q_INVOKABLE int disableDuration();
     Q_INVOKABLE void setDisableDuration(int seconds);
 
@@ -69,6 +73,7 @@ public:
 Q_SIGNALS:
     void migratedConfig();
     void apiEnabledChanged();
+    void infoLoggingChanged();
 
 private:
     QStringList parseList(const QString &section, const QString &listName) const;

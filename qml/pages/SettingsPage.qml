@@ -42,8 +42,17 @@ Page {
             TextSwitch {
                 id: apiSwitch
                 text: qsTr("Enable")
-                onCheckedChanged: manager.setApiEnabled(checked)
-                Component.onCompleted: checked = manager.apiEnabled
+                property bool initialized: false
+                onCheckedChanged: {
+                    if (apiSwitch.initialized) {
+                        manager.setApiEnabled(checked);
+                        appWindow.restartBlocky();
+                    }
+                }
+                Component.onCompleted: {
+                    checked = manager.apiEnabled;
+                    apiSwitch.initialized = true;
+                }
             }
 
             Label {
@@ -55,7 +64,40 @@ Page {
                 }
                 color: Theme.secondaryColor
                 font.pixelSize: Theme.fontSizeExtraSmall
-                text: qsTr("Enables the REST API on port 4000. Required to disable blocking from the Cover. Also, the service must be restarted for this change to take effect.")
+                text: qsTr("Enables the REST API on port 4000. Required to disable blocking from the Cover. The service is restarted when changed.")
+                wrapMode: Text.Wrap
+            }
+
+            SectionHeader {
+                text: qsTr("Logging")
+            }
+
+            TextSwitch {
+                id: infoLoggingSwitch
+                text: qsTr("Info logging")
+                property bool initialized: false
+                onCheckedChanged: {
+                    if (infoLoggingSwitch.initialized) {
+                        manager.setInfoLogging(checked);
+                        appWindow.restartBlocky();
+                    }
+                }
+                Component.onCompleted: {
+                    checked = manager.infoLogging;
+                    infoLoggingSwitch.initialized = true;
+                }
+            }
+
+            Label {
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    leftMargin: Theme.horizontalPageMargin
+                    rightMargin: Theme.horizontalPageMargin
+                }
+                color: Theme.secondaryColor
+                font.pixelSize: Theme.fontSizeExtraSmall
+                text: qsTr("Sets the blocky log level to info instead of the default warn. The service is restarted when changed.")
                 wrapMode: Text.Wrap
             }
 
