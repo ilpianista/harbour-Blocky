@@ -137,19 +137,19 @@
     </message>
     <message>
         <source>Logging</source>
-        <translation type="unfinished"></translation>
+        <translation>Loggning</translation>
     </message>
     <message>
         <source>Info logging</source>
-        <translation type="unfinished"></translation>
+        <translation>Infologgning</translation>
     </message>
     <message>
         <source>Sets the blocky log level to info instead of the default warn. The service is restarted when changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sätter blockys loggnivå till info istället för standard varning. Tjänsten startas om när detta ändras.</translation>
     </message>
     <message>
         <source>Enables the REST API on port 4000. Required to disable blocking from the Cover. The service is restarted when changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiverar REST-API på port 4000. Krävs för att avaktivera blockering från miniatyren. Tjänsten startas om när detta ändras.</translation>
     </message>
 </context>
 </TS>
