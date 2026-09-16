@@ -1,5 +1,5 @@
 * Wed Sep 16 2026 Andrea Scarpino <andrea@scarpino.dev> 0.0.11-1
-- Set log level to info by default and enable privacy mode.
+- Set log level to warn by default and enable privacy mode.
 - Run the blocky process using the blocky user.
 - Support for Simple Mapping Custom DNS.
 - Update Blocky to 0.35.0.
