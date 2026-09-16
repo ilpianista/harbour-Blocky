@@ -26,6 +26,8 @@ Source2:    blocky.service
 Source3:    blocky.yaml
 Source4:    connman.override.conf
 Requires:   sailfishsilica-qt5 >= 0.10.9
+Requires(pre): /usr/bin/getent
+Requires(pre): /usr/sbin/useradd
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Network)
@@ -100,14 +102,19 @@ desktop-file-install --delete-original       \
 # >> files
 # << files
 
+%pre
+if ! getent passwd blocky >/dev/null ; then
+  useradd -r -s /sbin/nologin blocky
+fi
+
 %post
 systemctl daemon-reload
 if [ $1 -eq 1 ]; then
-systemctl enable blocky.service
-systemctl restart connman.service
-rm /etc/resolv.conf
-echo "nameserver 127.0.0.1" > /etc/resolv.conf
-systemctl-user restart booster-browser@sailfish-browser booster-browser@jolla-email
+  systemctl enable blocky.service
+  systemctl restart connman.service
+  rm /etc/resolv.conf
+  echo "nameserver 127.0.0.1" > /etc/resolv.conf
+  systemctl-user restart booster-browser@sailfish-browser booster-browser@jolla-email
 fi
 systemctl restart blocky.service
 
