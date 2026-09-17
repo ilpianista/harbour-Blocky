@@ -28,6 +28,7 @@ Source4:    connman.override.conf
 Requires:   sailfishsilica-qt5 >= 0.10.9
 Requires(pre): /usr/bin/getent
 Requires(pre): /usr/sbin/useradd
+Requires(postun): /usr/sbin/userdel
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Network)
@@ -130,4 +131,5 @@ if [ $1 -eq 0 ]; then
   rm /etc/resolv.conf
   systemctl restart connman.service
   systemd-tmpfiles --create
+  userdel blocky > /dev/null 2>&1
 fi
