@@ -7,7 +7,9 @@ However, the `blocky` process uses its own user.
 
 ## Install
 
-Install via [OpenRepos](https://openrepos.net/content/ilpianista/blocky).
+Install via Harpoon:
+
+[![Add to Harpoon](add-to-harpoon.png)](https://github.com/JuhaniLehtimaeki/Harpoon)
 
 ## Translations
 
