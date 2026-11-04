@@ -1,3 +1,7 @@
+* Wed Nov 04 2026 Andrea Scarpino <andrea@scarpino.dev> 0.0.12-1
+- Remove blocky user on uninstall.
+- Translation update.
+
 * Wed Sep 16 2026 Andrea Scarpino <andrea@scarpino.dev> 0.0.11-1
 - Set log level to warn by default and enable privacy mode.
 - Run the blocky process using the blocky user.
