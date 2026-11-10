@@ -365,6 +365,8 @@ QString BlockyManager::generateConfig(const QStringList &upstreamServers,
 
     if (settings.value(QStringLiteral("apiEnabled"), true).toBool()) {
         config += QLatin1String("  http: 127.0.0.1:4000\n");
+        config += QLatin1String("pprof:\n");
+        config += QLatin1String("  enable: false\n");
     }
 
     if (!mappings.isEmpty()) {
